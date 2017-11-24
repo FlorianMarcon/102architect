@@ -11,12 +11,39 @@ from math import *
 class archi():
 	point = [float(sys.argv[1]), float(sys.argv[2]), 1]
 	plan = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+	plan_base = [1, 0, 0, 0, 1, 0, 0, 0, 1]
 	new_plan = [1, 0, 0, 0, 1, 0, 0, 0, 1]
 
+
 class balise():
-	flag = ["-t", "-h", "-r"]
+	flag = ["-t", "-h", "-r", "-s"]
 
 class operation():
+	def egalite():
+		archi.plan[0] = archi.new_plan[0]
+		archi.plan[1] = archi.new_plan[1]
+		archi.plan[2] = archi.new_plan[2]
+		archi.plan[3] = archi.new_plan[3]
+		archi.plan[4] = archi.new_plan[4]
+		archi.plan[5] = archi.new_plan[5]
+		archi.plan[6] = archi.new_plan[6]
+		archi.plan[7] = archi.new_plan[7]
+		archi.plan[8] = archi.new_plan[8]
+	def multi_matri3(matr):
+		x = 0
+		y = 0
+		var = 0
+		somme = 0
+		while x < 3:
+			y = 0
+			while y < 3:
+				somme = archi.plan[y * 3 + 0] * matr[0 * 3 + x]
+				somme = somme + (archi.plan[y * 3 + 1] * matr[1 * 3 + x])
+				somme = somme + (archi.plan[y * 3 + 2] * matr[2 * 3 + x])
+				archi.new_plan[y * 3 + x] = somme
+				y = y + 1
+			x = x + 1
+		operation.egalite()
 	def multi_matri2(matr):
 		x = 0
 		y = 0
@@ -30,34 +57,42 @@ class operation():
 				somme = somme + (matr[y * 3 + 2] * archi.plan[2 * 3 + x])
 				archi.new_plan[y * 3 + x] = somme
 				y = y + 1
-				x = x + 1
-				archi.plan = archi.new_plan
+			x = x + 1
+		operation.egalite()
+	def symetrie(i):
+		angle = float(sys.argv[i + 1])
+		angle = radians(angle)
+		tab = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+		tab[0] =  pow(cos(angle), 2) - pow(sin(angle), 2)
+		tab[1] = 2 * cos(angle) * sin(angle)
+		tab[3] = 2 * cos(angle) * sin(angle)
+		tab[4] = pow(sin(angle), 2) - pow(cos(angle), 2)
+		operation.multi_matri2(tab)
+		print ("Symmetry about an axis inclined with an agnle of ", end = '')
+		print(sys.argv[i + 1], "degrees")
 	def rotation(i):
 		angle = int(sys.argv[i + 1])
 		angle = radians(angle)
-		cos_ang = round(cos(angle), 3)
-		sin_ang = round(sin(angle), 3)
+		cos_ang = cos(angle)
+		sin_ang = sin(angle)
 		angle = [cos_ang, -sin_ang, 0, sin_ang, cos_ang, 0, 0, 0, 1]
-		operation.multi_matri2(angle)
+		operation.multi_matri3(angle)
 		print("Rotation at a", sys.argv[i + 1], "degrees angle")
 	def homothety(i):
-		homo = [sys.argv[i + 1], sys.argv[i + 2], 1]
-		archi.new_plan[0] = archi.plan[0] * int(homo[0])
-		archi.new_plan[4] = archi.plan[4] * int(homo[1])
-		archi.new_plan[8] = archi.plan[8] * int(homo[2])
-		archi.plan = archi.new_plan
+		var = 0
+		homo = [float(sys.argv[i + 1]), 0, 0, 0, float(sys.argv[i + 2]), 0, 0, 0, 1]
+		operation.multi_matri3(homo)
+		operation.egalite()
 		print("Homothety by the ratios", sys.argv[i + 1], "and", sys.argv[i + 2])
 	def translation(i):
 		sentence = "Translation by the vector ("
-		transla = [sys.argv[i + 1], sys.argv[i + 2], 0]
-		archi.new_plan[0] = float(archi.plan[0]) + float(transla[0])
-		archi.new_plan[4] = float(archi.plan[4]) + float(transla[1])
-		archi.new_plan[8] = float(archi.plan[8]) + float(transla[2])
-		archi.plan = archi.new_plan
+		transla = [1, 0, float(sys.argv[i + 1]), 0, 1, float(sys.argv[i + 2]), 0, 0, 1]
+		operation.multi_matri3(transla)
+		operation.egalite()
 		print(sentence, end = '')
-		print (transla[0], end = '')
+		print (sys.argv[i + 1], end = '')
 		print(",", end = '')
-		print (transla[1], end = '')
+		print (sys.argv[i + 2], end = '')
 		print (")")
 	def display_matrice():
 		print(archi.new_plan[0],"	", archi.new_plan[1], "	", archi.new_plan[2])
@@ -69,26 +104,32 @@ class operation():
 			return (2)
 		if sys.argv[i] == balise.flag[1]:
 			operation.homothety(i)
-			return(2)
+			return (2)
 		if sys.argv[i] == balise.flag[2]:
 			operation.rotation(i)
-			return(1)
+			return (1)
+		if sys.argv[i] == balise.flag[3]:
+			operation.symetrie(i)
+			return (1)
 		return (0)
 	def arrondi():
 		i = 0
 		while i < 9:
-			archi.plan[i] = round(archi.plan[i], 2)
+			archi.new_plan[i] = round(archi.plan[i], 2)
 			i = i + 1
 
 class rename_point():
 	def multi_newpoint(point):
+		new_point = [0, 0, 0]
 		x = 0
 		y = 0
 		while y < 3:
-			point[y] = float(point[y]) * (archi.plan[x] + archi.plan[x + 1] + archi.plan[x + 2])
+			somme = archi.plan[y * 3 + 0] * point[0]
+			somme = somme + archi.plan[y * 3 + 1] * point[1]
+			somme = somme + archi.plan[y * 3 + 2] * point[2]
+			new_point[y] = float(round(somme, 2))
 			y = y + 1
-			x = x + 3
-			return (point)
+		return (new_point)
 	def new_point():
 		i = 0
 		point = archi.point
