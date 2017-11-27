@@ -22,5 +22,6 @@ def main():
 	operation.arrondi()
 	operation.display_matrice()
 	rename_point.new_point()
+	return (0)
 
 main()
