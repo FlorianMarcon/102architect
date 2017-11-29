@@ -17,4 +17,7 @@ def main():
 	operation.display_matrice()
 	rename_point.new_point()
 
+def display_usage():
+	print("Usage :/ ./102architect  x y  [-t, -r, -s, -h]")
+
 main()

@@ -29,22 +29,7 @@ class operation():
 		archi.plan[6] = archi.new_plan[6]
 		archi.plan[7] = archi.new_plan[7]
 		archi.plan[8] = archi.new_plan[8]
-	def multi_matri3(matr):
-		x = 0
-		y = 0
-		var = 0
-		somme = 0
-		while x < 3:
-			y = 0
-			while y < 3:
-				somme = archi.plan[y * 3 + 0] * matr[0 * 3 + x]
-				somme = somme + (archi.plan[y * 3 + 1] * matr[1 * 3 + x])
-				somme = somme + (archi.plan[y * 3 + 2] * matr[2 * 3 + x])
-				archi.new_plan[y * 3 + x] = somme
-				y = y + 1
-			x = x + 1
-		operation.egalite()
-	def multi_matri2(matr):
+	def multi_matri(matr):
 		x = 0
 		y = 0
 		var = 0
@@ -67,7 +52,7 @@ class operation():
 		tab[1] = 2 * cos(angle) * sin(angle)
 		tab[3] = 2 * cos(angle) * sin(angle)
 		tab[4] = pow(sin(angle), 2) - pow(cos(angle), 2)
-		operation.multi_matri2(tab)
+		operation.multi_matri(tab)
 		print ("Symmetry about an axis inclined with an agnle of ", end = '')
 		print(sys.argv[i + 1], "degrees")
 	def rotation(i):
@@ -76,18 +61,18 @@ class operation():
 		cos_ang = cos(angle)
 		sin_ang = sin(angle)
 		angle = [cos_ang, -sin_ang, 0, sin_ang, cos_ang, 0, 0, 0, 1]
-		operation.multi_matri3(angle)
+		operation.multi_matri(angle)
 		print("Rotation at a", sys.argv[i + 1], "degrees angle")
 	def homothety(i):
 		var = 0
 		homo = [float(sys.argv[i + 1]), 0, 0, 0, float(sys.argv[i + 2]), 0, 0, 0, 1]
-		operation.multi_matri3(homo)
+		operation.multi_matri(homo)
 		operation.egalite()
 		print("Homothety by the ratios", sys.argv[i + 1], "and", sys.argv[i + 2])
 	def translation(i):
 		sentence = "Translation by the vector ("
 		transla = [1, 0, float(sys.argv[i + 1]), 0, 1, float(sys.argv[i + 2]), 0, 0, 1]
-		operation.multi_matri3(transla)
+		operation.multi_matri(transla)
 		operation.egalite()
 		print(sentence, end = '')
 		print (sys.argv[i + 1], end = '')
