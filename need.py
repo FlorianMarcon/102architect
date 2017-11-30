@@ -53,7 +53,7 @@ class operation():
 		tab[3] = 2 * cos(angle) * sin(angle)
 		tab[4] = pow(sin(angle), 2) - pow(cos(angle), 2)
 		operation.multi_matri(tab)
-		print ("Symmetry about an axis inclined with an agnle of ", end = '')
+		print ("Symmetry about an axis inclined with an angle of ", end = '')
 		print(sys.argv[i + 1], "degrees")
 	def rotation(i):
 		angle = int(sys.argv[i + 1])
@@ -62,27 +62,27 @@ class operation():
 		sin_ang = sin(angle)
 		angle = [cos_ang, -sin_ang, 0, sin_ang, cos_ang, 0, 0, 0, 1]
 		operation.multi_matri(angle)
-		print("Rotation at a", sys.argv[i + 1], "degrees angle")
+		print("Rotation at a", sys.argv[i + 1], "degree angle")
 	def homothety(i):
 		var = 0
-		homo = [float(sys.argv[i + 1]), 0, 0, 0, float(sys.argv[i + 2]), 0, 0, 0, 1]
+		homo = [0, 0, 0, 0, 0, 0, 0, 0, 1]
+		homo[0] = float(sys.argv[i + 1])
+		homo[4] = float(sys.argv[i + 2])
 		operation.multi_matri(homo)
 		operation.egalite()
 		print("Homothety by the ratios", sys.argv[i + 1], "and", sys.argv[i + 2])
 	def translation(i):
 		sentence = "Translation by the vector ("
-		transla = [1, 0, float(sys.argv[i + 1]), 0, 1, float(sys.argv[i + 2]), 0, 0, 1]
+		transla = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+		transla[2] = float(sys.argv[i + 1])
+		transla[5] = float(sys.argv[i + 2])
 		operation.multi_matri(transla)
 		operation.egalite()
 		print(sentence, end = '')
 		print (sys.argv[i + 1], end = '')
-		print(",", end = '')
+		print(", ", end = '')
 		print (sys.argv[i + 2], end = '')
 		print (")")
-	def display_matrice():
-		print(archi.new_plan[0],"	", archi.new_plan[1], "	", archi.new_plan[2])
-		print(archi.new_plan[3], "	", archi.new_plan[4], "	", archi.new_plan[5])
-		print(archi.new_plan[6], "	", archi.new_plan[7], "	",archi.new_plan[8])
 	def	search_operation(i):
 		if sys.argv[i] == balise.flag[0]:
 			operation.translation(i)
@@ -119,15 +119,29 @@ class rename_point():
 		i = 0
 		point = archi.point
 		print ('(', end = '')
-		print (point[0], end = '')
+		print (sys.argv[1], end = '')
 		print(",", end = '')
-		print(point[1], end = '')
+		print(sys.argv[2], end = '')
 		print(") => (",end = '')
 		point = rename_point.multi_newpoint(point)
 		while i < 3:
 			point[i] = round(point[i], 2)
 			i = i + 1
-		print (point[0], end = '')
+		print ("%.2f" % point[0], end = '')
 		print (",", end = '')
-		print(point[1], end = '')
+		print("%.2f" % point[1], end = '')
 		print (")")
+
+class displaying():
+	def display_matrice():
+		print("%.2f" % archi.new_plan[0],"	", end = '')
+		print("%.2f" % archi.new_plan[1], "	", end = '')
+		print("%.2f" % archi.new_plan[2])
+		print("%.2f" % archi.new_plan[3], "	", end = '')
+		print("%.2f" % archi.new_plan[4], "	", end = '')
+		print("%.2f" % archi.new_plan[5])
+		print("%.2f" % archi.new_plan[6], "	", end = '')
+		print("%.2f" % archi.new_plan[7], "	", end = '')
+		print("%.2f" % archi.new_plan[8])
+	def display():
+		displaying.display_matrice()

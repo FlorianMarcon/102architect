@@ -14,10 +14,14 @@ def	base():
 def main():
 	base()
 	operation.arrondi()
-	operation.display_matrice()
+	displaying.display()
 	rename_point.new_point()
 
 def display_usage():
 	print("Usage :/ ./102architect  x y  [-t, -r, -s, -h]")
 
-main()
+
+if len(sys.argv) < 3:
+	display_usage()
+else:
+	main()
