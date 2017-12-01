@@ -144,4 +144,9 @@ class displaying():
 		print("%.2f" % archi.new_plan[7], "	", end = '')
 		print("%.2f" % archi.new_plan[8])
 	def display():
+		i = 0
+		while i < 9:
+			if archi.new_plan[i] == 0:
+				archi.new_plan[i] = 0
+			i = i + 1
 		displaying.display_matrice()

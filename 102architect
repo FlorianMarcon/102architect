@@ -20,8 +20,8 @@ def main():
 def display_usage():
 	print("Usage :/ ./102architect  x y  [-t, -r, -s, -h]")
 
-
 if len(sys.argv) < 3:
 	display_usage()
+	exit(84)
 else:
 	main()
